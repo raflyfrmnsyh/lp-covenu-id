@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenu - Platform Manajemen & Booking Venue</title>
+    <meta name="description" content="Maksimalkan okupansi venue, cegah double booking, dan kelola bisnis lebih pintar dengan Covenu.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Alpine.js for Interactivity (FAQ & Mobile Menu) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-indigo-600 flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Covenu
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#solusi" class="text-gray-500 hover:text-gray-900 text-sm font-medium transition">Solusi</a>
+                    <a href="#fitur" class="text-gray-500 hover:text-gray-900 text-sm font-medium transition">Fitur</a>
+                    <a href="#harga" class="text-gray-500 hover:text-gray-900 text-sm font-medium transition">Harga</a>
+                    <a href="#faq" class="text-gray-500 hover:text-gray-900 text-sm font-medium transition">FAQ</a>
+                </nav>
+                
+                <!-- CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 text-sm font-medium transition">Masuk</a>
+                    <a href="#" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm hover:shadow-md">Coba Gratis</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-500 hover:text-gray-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" class="md:hidden bg-white border-t border-gray-100" x-transition>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#solusi" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md">Solusi</a>
+                <a href="#fitur" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md">Fitur</a>
+                <a href="#harga" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md">Harga</a>
+                <a href="#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md">FAQ</a>
+                <div class="border-t border-gray-100 pt-4 pb-2">
+                    <a href="#" class="block w-full text-center bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium">Coba Gratis</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero Section -->
+        <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Hero Content -->
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-sm font-medium mb-6">
+                            <span class="flex h-2 w-2 rounded-full bg-indigo-500"></span>
+                            Platform Manajemen Venue #1 di Indonesia
+                        </div>
+                        <h1 class="text-4xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-6">
+                            Maksimalkan Okupansi Venue Tanpa Pusing Jadwal Bentrok.
+                        </h1>
+                        <p class="text-lg text-gray-500 mb-8 leading-relaxed max-w-xl">
+                            Platform <i>booking</i> dan manajemen modern untuk sport center, villa, klinik, dan studio. Cegah double booking, otomatisasi jadwal, dan terima pembayaran instan.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                            <a href="#" class="inline-flex justify-center items-center px-6 py-3.5 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                                Mulai Gratis
+                            </a>
+                            <a href="#" class="inline-flex justify-center items-center px-6 py-3.5 border border-gray-200 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition">
+                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Lihat Demo
+                            </a>
+                        </div>
+                        
+                        <!-- Trust Indicator -->
+                        <div class="flex items-center gap-4 text-sm text-gray-400">
+                            <div class="flex -space-x-2">
+                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=1" alt="User">
+                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=2" alt="User">
+                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=3" alt="User">
+                            </div>
+                            <p>Dipercaya oleh <strong>500+</strong> pemilik venue</p>
+                        </div>
+                    </div>
+
+                    <!-- Hero Mockup -->
+                    <div class="relative lg:ml-auto">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur-2xl opacity-20 animate-pulse"></div>
+                        <div class="relative rounded-2xl bg-white border border-gray-100 shadow-2xl p-2 sm:p-4 overflow-hidden">
+                            <!-- Abstract Dashboard UI -->
+                            <div class="rounded-xl border border-gray-100 bg-gray-50 overflow-hidden">
+                                <div class="h-10 border-b border-gray-200 bg-white flex items-center px-4 gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                </div>
+                                <div class="p-4 grid gap-4">
+                                    <div class="flex justify-between items-end">
+                                        <div>
+                                            <div class="h-3 w-24 bg-gray-200 rounded mb-2"></div>
+                                            <div class="h-6 w-32 bg-gray-300 rounded"></div>
+                                        </div>
+                                        <div class="h-8 w-24 bg-indigo-100 rounded text-indigo-600 text-xs font-semibold flex items-center justify-center">+15% Hari ini</div>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-3">
+                                        <div class="h-20 bg-white rounded-lg border border-gray-100 shadow-sm"></div>
+                                        <div class="h-20 bg-white rounded-lg border border-gray-100 shadow-sm"></div>
+                                        <div class="h-20 bg-white rounded-lg border border-gray-100 shadow-sm"></div>
+                                    </div>
+                                    <div class="h-32 bg-white rounded-lg border border-gray-100 shadow-sm p-3">
+                                        <div class="h-full w-full bg-gray-50 rounded border border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-sm">Real-time Schedule</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Problem Section (Data-driven) -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Masalah Klasik Pengelola Venue</h2>
+                    <p class="text-gray-500 text-lg">Mengelola jadwal secara manual tidak hanya membuang waktu, tapi juga merugikan pendapatan bisnis Anda secara perlahan.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Problem 1 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 text-red-500 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        </div>
+                        <h3 class="text-4xl font-bold text-gray-900 mb-2">65%</h3>
+                        <p class="font-semibold text-gray-900 mb-1">Pelanggan Hilang</p>
+                        <p class="text-sm text-gray-500">Akibat insiden *double booking* dan kelalaian penjadwalan manual, pelanggan kecewa dan enggan kembali.</p>
+                    </div>
+
+                    <!-- Problem 2 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="text-4xl font-bold text-gray-900 mb-2">15 Jam</h3>
+                        <p class="font-semibold text-gray-900 mb-1">Terbuang Tiap Minggu</p>
+                        <p class="text-sm text-gray-500">Waktu yang habis hanya untuk mengurus *spreadsheet* jadwal, merekap ketersediaan, dan membalas *chat* pelanggan.</p>
+                    </div>
+
+                    <!-- Problem 3 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="text-4xl font-bold text-gray-900 mb-2">30%</h3>
+                        <p class="font-semibold text-gray-900 mb-1">Pendapatan Bocor</p>
+                        <p class="text-sm text-gray-500">Terjadi karena *no-show* (pelanggan batal sepihak) dan proses verifikasi pembayaran transfer manual yang rumit.</p>
+                    </div>
+
+                    <!-- Problem 4 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                        </div>
+                        <h3 class="text-4xl font-bold text-gray-900 mb-2">2x Lipat</h3>
+                        <p class="font-semibold text-gray-900 mb-1">Kehilangan Potensi Skala</p>
+                        <p class="text-sm text-gray-500">Mengelola bisnis tanpa dasbor analitik membuat Anda hanya bisa menebak performa dan kalah cepat dari kompetitor.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Solution Section -->
+        <section id="solusi" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Covenu Mengubah Segalanya</h2>
+                    <p class="text-gray-500 text-lg">Sistem terpusat yang dirancang khusus untuk memangkas kerumitan operasional venue Anda.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    <!-- Sol 1 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Sinkronisasi Real-time</h3>
+                            <p class="text-gray-500">Jadwal diperbarui detik itu juga di semua platform. Selamat tinggal *double booking* dan keluhan pelanggan.</p>
+                        </div>
+                    </div>
+                    <!-- Sol 2 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Dashboard Terpusat</h3>
+                            <p class="text-gray-500">Kelola semua venue, ruangan, atau lapangan Anda dari satu layar. Pantau ketersediaan tanpa ribet.</p>
+                        </div>
+                    </div>
+                    <!-- Sol 3 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Integrasi Pembayaran Digital</h3>
+                            <p class="text-gray-500">Otomatisasi invoice dan terima pembayaran lewat Virtual Account, e-Wallet, atau kartu kredit via integrasi Midtrans.</p>
+                        </div>
+                    </div>
+                    <!-- Sol 4 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Laporan & Analitik Otomatis</h3>
+                            <p class="text-gray-500">Dapatkan insight mendalam tentang jam ramai, pendapatan bulanan, dan retensi pelanggan secara instan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Features & Link-in-Bio Section -->
+        <section id="fitur" class="py-20 bg-white border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Main Features -->
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Fitur Lengkap untuk Skala Bisnis Anda</h2>
+                    <p class="text-gray-500 text-lg max-w-2xl">Arsitektur sistem yang andal untuk mendukung pertumbuhan bisnis venue dari satu lokasi hingga ratusan cabang.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="group bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:bg-white hover:shadow-xl hover:border-indigo-100 transition duration-300">
+                        <div class="mb-6 inline-flex p-3 rounded-xl bg-white shadow-sm border border-gray-100 group-hover:scale-110 transition">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Booking Automation</h3>
+                        <p class="text-gray-500 mb-4">Sistem akan secara otomatis mengunci slot waktu setelah dibayar dan mengirimkan invoice serta konfirmasi melalui email/WhatsApp pelanggan.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Sinkronisasi otomatis</li>
+                            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Notifikasi WhatsApp pintar</li>
+                        </ul>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="group bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:bg-white hover:shadow-xl hover:border-indigo-100 transition duration-300">
+                        <div class="mb-6 inline-flex p-3 rounded-xl bg-white shadow-sm border border-gray-100 group-hover:scale-110 transition">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Multi Payment Gateway</h3>
+                        <p class="text-gray-500 mb-4">Terima pembayaran instan tanpa perlu repot mengecek mutasi bank. Didukung oleh integrasi mulus dengan gateway terkemuka (Midtrans).</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Virtual Account & Kartu Kredit</li>
+                            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> QRIS & e-Wallet (GoPay, OVO)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHT FEATURE: Link-in-Bio & Social Media -->
+                <div class="mt-16 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-[2rem] p-8 md:p-12 border border-indigo-100 flex flex-col lg:flex-row items-center gap-10 shadow-sm hover:shadow-md transition duration-300">
+                    <!-- Text Content -->
+                    <div class="flex-1">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white shadow-sm border border-indigo-100 text-indigo-600 text-sm font-semibold mb-6">
+                            <svg class="w-4 h-4 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            Instagram & WhatsApp Ready
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4 leading-tight">Satu <span class="text-indigo-600">Link</span> untuk Semua Reservasi.</h3>
+                        <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                            Tinggalkan cara lama membalas chat satu per satu. Cukup pasang <i>link</i> unik venue Anda di <strong>Bio Instagram</strong> atau bagikan via <strong>WhatsApp</strong>. Pelanggan bisa langsung memilih jadwal dan membayar secara mandiri 24/7.
+                        </p>
+                        <ul class="space-y-4 text-gray-700 font-medium">
+                            <li class="flex items-center gap-3">
+                                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                Halaman booking mobile-friendly responsif
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                Ubah followers media sosial langsung menjadi pembeli
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Phone Mockup Visual -->
+                    <div class="flex-shrink-0 relative mt-8 lg:mt-0 w-full lg:w-auto flex justify-center">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
+                        <div class="relative w-64 h-[480px] bg-white rounded-[2.5rem] border-[8px] border-gray-900 shadow-2xl overflow-hidden">
+                            <!-- Notch -->
+                            <div class="absolute top-0 inset-x-0 h-6 bg-gray-900 rounded-b-xl w-32 mx-auto z-20"></div>
+                            
+                            <!-- Phone Screen / IG Profile Simulation -->
+                            <div class="p-5 pt-10 bg-gray-50 h-full relative z-10 flex flex-col">
+                                <!-- Profile Header -->
+                                <div class="flex items-center gap-4 mb-6">
+                                    <div class="w-16 h-16 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 rounded-full p-1">
+                                        <div class="w-full h-full bg-white rounded-full border-2 border-white overflow-hidden">
+                                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=200&auto=format&fit=crop" alt="Sport Center" class="w-full h-full object-cover">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="w-24 h-4 bg-gray-800 rounded-md mb-2"></div>
+                                        <div class="w-16 h-3 bg-gray-400 rounded-md"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bio Text -->
+                                <div class="space-y-2 mb-4">
+                                    <div class="w-full h-2.5 bg-gray-300 rounded-full"></div>
+                                    <div class="w-4/5 h-2.5 bg-gray-300 rounded-full"></div>
+                                </div>
+
+                                <!-- THE LINK -->
+                                <div class="w-full py-2.5 px-3 bg-indigo-50 border border-indigo-200 text-indigo-700 text-sm font-semibold flex items-center gap-2 rounded-lg mb-6 shadow-sm cursor-pointer hover:bg-indigo-100 transition">
+                                    <svg class="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                    covenu.id/sportcenter
+                                </div>
+                                
+                                <!-- Grid Simulation -->
+                                <div class="grid grid-cols-3 gap-1.5 mt-auto">
+                                    <div class="aspect-square bg-gray-200 rounded-sm"></div>
+                                    <div class="aspect-square bg-gray-200 rounded-sm"></div>
+                                    <div class="aspect-square bg-gray-200 rounded-sm"></div>
+                                    <div class="aspect-square bg-gray-200 rounded-sm"></div>
+                                    <div class="aspect-square bg-gray-200 rounded-sm"></div>
+                                    <div class="aspect-square bg-gray-200 rounded-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Value Proposition (Banner) -->
+        <section class="py-20 bg-indigo-900 text-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="currentColor" stroke-width="1" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid-pattern)"/></svg>
+            </div>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Ubah Data Operasional Menjadi Keputusan Strategis.</h2>
+                <p class="text-xl text-indigo-200 mb-10 leading-relaxed">Covenu bukan sekadar alat pencatat jadwal. Kami membantu Anda memaksimalkan okupansi, meningkatkan pendapatan, dan mempersiapkan bisnis untuk skala yang lebih besar.</p>
+                <div class="grid sm:grid-cols-3 gap-8 text-center divide-y sm:divide-y-0 sm:divide-x divide-indigo-800 border-t border-b border-indigo-800 py-8">
+                    <div>
+                        <div class="text-4xl font-bold text-white mb-2">+40%</div>
+                        <div class="text-sm text-indigo-300">Rata-rata Peningkatan Okupansi</div>
+                    </div>
+                    <div class="pt-6 sm:pt-0">
+                        <div class="text-4xl font-bold text-white mb-2">0</div>
+                        <div class="text-sm text-indigo-300">Kasus Double Booking</div>
+                    </div>
+                    <div class="pt-6 sm:pt-0">
+                        <div class="text-4xl font-bold text-white mb-2">10x</div>
+                        <div class="text-sm text-indigo-300">Lebih Cepat Rekap Laporan</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Pricing Plan Section (4 Tiers) -->
+        <section id="harga" class="py-24 bg-gray-50">
+            <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Pilihan Paket Sesuai Skala Bisnis Anda</h2>
+                    <p class="text-gray-500 text-lg">Mulai gunakan fitur link-in-bio secara gratis, tingkatkan paket saat pesanan Anda mulai membludak.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+                    
+                    <!-- Gratis Plan -->
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">Gratis</h3>
+                        <p class="text-gray-500 text-sm mb-6 h-10">Cocok untuk mencoba sistem.</p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-bold text-gray-900">Rp 0</span>
+                        </div>
+                        <a href="#" class="mt-auto block w-full py-2.5 px-4 bg-indigo-50 text-indigo-600 font-medium text-center rounded-lg hover:bg-indigo-100 transition mb-6">Daftar Gratis</a>
+                        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 1 Lokasi Venue</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maks. 30 booking/bulan</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Link-in-Bio Instagram/WA</li>
+                            <li class="flex items-start gap-3 text-gray-400"><svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg> Integrasi Pembayaran Online</li>
+                        </ul>
+                    </div>
+
+                    <!-- Basic Plan -->
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">Basic</h3>
+                        <p class="text-gray-500 text-sm mb-6 h-10">Bebas batasan jumlah pesanan.</p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-bold text-gray-900">Rp 99k</span>
+                            <span class="text-gray-500 text-sm">/ bln</span>
+                        </div>
+                        <a href="#" class="mt-auto block w-full py-2.5 px-4 bg-white border border-indigo-200 text-indigo-600 font-medium text-center rounded-lg hover:bg-indigo-50 transition mb-6">Pilih Basic</a>
+                        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 1 Lokasi Venue</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <strong>Booking Tanpa Batas</strong></li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Link-in-Bio Instagram/WA</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Pembayaran Online Dasar</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Notifikasi via Email</li>
+                        </ul>
+                    </div>
+
+                    <!-- Business Plan (Highlighted) -->
+                    <div class="bg-white rounded-2xl border-2 border-indigo-500 p-6 flex flex-col shadow-xl relative transform lg:-translate-y-4">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">
+                            <span class="bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full shadow-sm">Paling Populer</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1 mt-2">Business</h3>
+                        <p class="text-gray-500 text-sm mb-6 h-10">Optimasi operasional & analitik.</p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-bold text-gray-900">Rp 299k</span>
+                            <span class="text-gray-500 text-sm">/ bln</span>
+                        </div>
+                        <a href="#" class="mt-auto block w-full py-2.5 px-4 bg-indigo-600 text-white font-medium text-center rounded-lg hover:bg-indigo-700 transition shadow-md mb-6">Coba Gratis 14 Hari</a>
+                        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Hingga 3 Lokasi Venue</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Booking Tanpa Batas</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Integrasi Payment Gateway (Lengkap)</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <strong>Notifikasi WhatsApp Otomatis</strong></li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Laporan Analitik & Ekspor CSV</li>
+                        </ul>
+                    </div>
+
+                    <!-- Advance Plan -->
+                    <div class="bg-gray-50 rounded-2xl border border-gray-200 p-6 flex flex-col shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">Advance</h3>
+                        <p class="text-gray-500 text-sm mb-6 h-10">Skala enterprise & kustomisasi.</p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-bold text-gray-900">Custom</span>
+                        </div>
+                        <a href="#" class="mt-auto block w-full py-2.5 px-4 bg-white border border-gray-300 text-gray-700 font-medium text-center rounded-lg hover:bg-gray-100 transition mb-6">Hubungi Sales</a>
+                        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Lokasi Venue Tanpa Batas</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Semua Fitur Business</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Manajemen Role Akses Staf</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> API Access Kustom</li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Dedicated Account Manager</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. FAQ Section -->
+        <section id="faq" class="py-20 bg-white">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan</h2>
+                </div>
+
+                <div class="space-y-4" x-data="{ active: null }">
+                    <!-- FAQ 1 -->
+                    <div class="border border-gray-200 rounded-xl bg-white overflow-hidden">
+                        <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full p-5 text-left focus:outline-none hover:bg-gray-50 transition">
+                            <span class="font-medium text-gray-900">Apakah Covenu bisa digunakan untuk semua jenis venue?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-200" :class="{'rotate-180': active === 1}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div x-show="active === 1" x-collapse x-transition class="p-5 pt-0 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                            Ya, Covenu didesain sangat fleksibel. Anda dapat mengatur ruangan, lapangan, studio, atau unit kamar sesuai dengan model bisnis Anda, baik itu untuk hitungan jam maupun hari.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="border border-gray-200 rounded-xl bg-white overflow-hidden">
+                        <button @click="active !== 2 ? active = 2 : active = null" class="flex justify-between items-center w-full p-5 text-left focus:outline-none hover:bg-gray-50 transition">
+                            <span class="font-medium text-gray-900">Bagaimana sistem pembayaran bekerja?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-200" :class="{'rotate-180': active === 2}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div x-show="active === 2" x-collapse x-transition class="p-5 pt-0 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                            Kami berintegrasi dengan Midtrans. Pelanggan dapat membayar via Virtual Account BCA/Mandiri/BNI, GoPay, OVO, atau Kartu Kredit. Status pembayaran akan otomatis diperbarui di sistem tanpa perlu cek mutasi manual.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="border border-gray-200 rounded-xl bg-white overflow-hidden">
+                        <button @click="active !== 3 ? active = 3 : active = null" class="flex justify-between items-center w-full p-5 text-left focus:outline-none hover:bg-gray-50 transition">
+                            <span class="font-medium text-gray-900">Bagaimana cara memasang link booking di Instagram?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-200" :class="{'rotate-180': active === 3}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div x-show="active === 3" x-collapse x-transition class="p-5 pt-0 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                            Sangat mudah! Setelah mendaftar, Anda akan mendapatkan tautan khusus (contoh: covenu.id/venue-anda). Cukup salin tautan tersebut, buka profil Instagram Anda, klik "Edit Profile", dan tempelkan di kolom "Website" atau "Links".
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="border border-gray-200 rounded-xl bg-white overflow-hidden">
+                        <button @click="active !== 4 ? active = 4 : active = null" class="flex justify-between items-center w-full p-5 text-left focus:outline-none hover:bg-gray-50 transition">
+                            <span class="font-medium text-gray-900">Apakah ada biaya potongan tambahan per transaksi?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-200" :class="{'rotate-180': active === 4}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div x-show="active === 4" x-collapse x-transition class="p-5 pt-0 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                            Covenu tidak memungut komisi per transaksi (0%). Anda hanya membayar biaya langganan bulanan sesuai paket. Biaya admin standar dari <i>payment gateway</i> akan tetap berlaku sesuai metode bayar pelanggan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Final CTA Section -->
+        <section class="py-24 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-10 blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-indigo-400 opacity-20 blur-3xl"></div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Siap Meningkatkan Pendapatan Venue Anda?</h2>
+                        <p class="text-indigo-100 text-lg mb-10 max-w-2xl mx-auto">Bergabung dengan ratusan pengelola venue lainnya yang sudah membuktikan kemudahan Covenu. Buat akun dalam 2 menit, tanpa kartu kredit.</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <a href="#" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-indigo-600 bg-white hover:bg-gray-50 transition shadow-lg hover:shadow-xl">
+                                Coba Gratis Sekarang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2 lg:col-span-2">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-indigo-600 flex items-center gap-2 mb-4">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Covenu
+                    </a>
+                    <p class="text-gray-500 text-sm max-w-xs mb-6">Platform manajemen dan booking venue terintegrasi untuk bisnis modern.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Produk</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-indigo-600 transition">Fitur</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">Harga</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">Integrasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Perusahaan</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-indigo-600 transition">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Legal</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-indigo-600 transition">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="hover:text-indigo-600 transition">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm">&copy; 2026 Covenu. All rights reserved.</p>
+                <div class="flex space-x-4 text-gray-400">
+                    <a href="#" class="hover:text-gray-600 transition"><span class="sr-only">Twitter</span><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg></a>
+                    <a href="#" class="hover:text-gray-600 transition"><span class="sr-only">LinkedIn</span><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
